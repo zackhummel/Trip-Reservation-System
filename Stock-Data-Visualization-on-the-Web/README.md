@@ -1,2 +1,2 @@
-# Stock-Data-Visualizer
-Project3 Stock Data Visualizer
+# Trip-Reservation-System
+Final Project Trip Reservation System
