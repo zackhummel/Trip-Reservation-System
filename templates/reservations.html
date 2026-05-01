@@ -3,15 +3,60 @@
 {% block title %}Trip Reservation{% endblock %}
 
 {% block content %}
-    <h1>Reservation</h1>
-<!--    <form method="POST" action="/">
-        <label>Menu Option:</label>
-        <select name="menu_option" required>
-            <option disabled selected>Choose An Option</option>
-            <option value="admin">Admin Login</option>
-            <option value="reserve">Reserve Seat</option>
-        </select>
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>-->
+    <h1>Reserve Seat</h1>
+    <br><hr><br>
+    <h2>Seating Chart</h2>
+    <p><strong>X</strong> = Reserved Seat; <strong>O</strong> = Available Seat</p>
+
+    <div id="flexContainer">
+
+        <div id="seatingVisual">
+            {% for i in range(12) %}
+            <li>
+                {% for j in range(4) %}
+                
+                {% if (i, j) in takenSeats %} <!-- if i = row and j = column-->
+                {{"X"}}
+                {% else %}
+                {{"O"}}
+                {% endif %}
+                
+                {% endfor %}
+            </li>
+            {% endfor %}
+        </div>
+
+        <div id="resMenu">
+                <form method="POST">
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname"><br><br>
+                <label for="lname">Last name:</label>
+                <input type="text" id="lname" name="lname"><br><br>
+
+                <label>Choose a row:</label>
+                <select name="selectedRow" required>
+                    <option disabled selected>Choose An Option</option>
+
+                    {% for i in range(12) %}
+                    
+                    <option value="{{i}}">Row {{i + 1}}</option>
+
+                    {% endfor %}
+
+                </select><br><br>
+
+                <label>Choose a seat:</label>
+                <select name="selectedSeat" required>
+                    <option disabled selected>Choose An Option</option>
+                    {% for j in range(4) %}
+                    
+                    <option value="{{j}}">Seat {{j + 1}}</option>
+                    
+                    {% endfor %}
+                </select><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
 {% endblock %}
