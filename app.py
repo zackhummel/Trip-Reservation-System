@@ -68,6 +68,8 @@ def login():
         else:
             flash('Invalid credentials. Please try again.', 'error')
             return render_template('admin.html')
+        
+    return render_template('admin.html')
 
 
 if __name__ == "__main__":
