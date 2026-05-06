@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Trip Reservation{% endblock %}
-
 {% block content %}
-    <h1>Reservation</h1>
-<!--    <form method="POST" action="/">
-        <label>Menu Option:</label>
-        <select name="menu_option" required>
-            <option disabled selected>Choose An Option</option>
-            <option value="admin">Admin Login</option>
-            <option value="reserve">Reserve Seat</option>
-        </select>
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>-->
+    <h1>{% block title %}All Reservations {% endblock %}</h1>
+    
+    {% for reservation in reservations %}
+        <div class="post">
+            <p><strong>Reservation ID: </strong> {{ reservation['passengerName'] }}</p>
+            <p><strong>Customer Name: </strong> {{ reservation['seatRow'] }}</p>
+            <p><strong>Working Area: </strong> {{ reservation['seatColumn']}}</p>
+            <p><strong>Phone: </strong> {{ reservation['eTicketNumber']}}</p>
+            <!-- <a href="{{ url_for('edit_get', code=reservation['RESERVATION_ID']) }}">Edit</a> -->
+        </div>
+    {% endfor %}
+
 {% endblock %}

@@ -41,13 +41,22 @@ def index():
         
     return render_template('index.html')
 
+
+
 @app.route("/admin", methods=['GET', 'POST'])
 def admin():
     return render_template('admin.html')
 
 @app.route("/reservations", methods=['GET', 'POST'])
 def reservations():
-    return render_template('reservations.html')
+    mydb = get_db_connection()
+    cursor = mydb.cursor()
+    query = "SELECT * FROM reservations;"
+    cursor.execute(query)
+    reservations = cursor.fetchall()
+
+    
+    return render_template('reservations.html', reservations=reservations)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
