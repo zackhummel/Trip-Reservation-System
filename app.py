@@ -151,9 +151,9 @@ def create_reservation_post():
         else: 
             flash(f"SUCCESS: {cursor.rowcount} new reservation(s) created.\nSee results below")
 
-    except Exception as error:
-        flash(f"Failed to create reservation for {firstName}.\nError Message: {error.msg}")
-    #return to the index page
+    except sqlite3.Error as e:
+        flash(f"Database error: {e}")
+        return redirect(url_for('create_reservation_get'))
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
