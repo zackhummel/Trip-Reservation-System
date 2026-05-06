@@ -139,20 +139,20 @@ def create_reservation_post():
         flash(error_message)
         return redirect(url_for('create_reservation_get'))
     #create an insert query
-    insert_query = "INSERT INTO reservations (FIRST_NAME, LAST_NAME, ROW, SEAT) values  (?, ?, ?, ?);"
+    insert_query = "INSERT INTO reservations (FIRST_NAME, ROW, SEAT) values  (?, ?, ?, ?);"
     #execute the query and check for errors
     try:
-        cursor.execute(insert_query, (firstName, lastName, row, seat))
+        cursor.execute(insert_query, (firstName, row, seat))
         mydb.commit()
 
         if cursor.rowcount == 0:
-            flash(f"ERROR: Reservation for {firstName} {lastName} was not created")
+            flash(f"ERROR: Reservation for {firstName} was not created")
             return redirect(url_for('create_reservation_get'))
         else: 
             flash(f"SUCCESS: {cursor.rowcount} new reservation(s) created.\nSee results below")
 
     except Exception as error:
-        flash(f"Failed to create reservation for {firstName} {lastName}.\nError Message: {error.msg}")
+        flash(f"Failed to create reservation for {firstName}.\nError Message: {error.msg}")
     #return to the index page
     return redirect(url_for('index'))
 
