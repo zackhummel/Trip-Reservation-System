@@ -24,7 +24,15 @@ def get_db_connection():
     except sqlite3.Error as e:
         print(f"Database connection error: {e}")
         return None
-   
+
+def get_reservationID(code):
+    #get a connection to the database
+    mydb = get_db_connection()
+    cursor = mydb.cursor(dictionary=True)
+    query = 'SELECT * FROM reservations WHERE id = %s;'
+    cursor.execute(query, (code,))
+    reservationID = cursor.fetchone()
+    return reservationID
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -80,6 +88,27 @@ def login():
         
     return render_template('admin.html')
 
+@app.route('/<code>/delete/', methods=('GET',))
+def delete_get(code):
+    #the dependent code is sent as a url parameter
+    #get the dependent code and send the dependent information to the delete.html template
+    reservationID = get_reservationID(code)
+    return render_template('delete.html', reservationID=reservationID)
+
+@app.route('/<code>/delete/', methods=('POST',))
+def delete_post(code):
+    #get a connection to the database and create a cursor
+    mydb = get_db_connection()
+    cursor = mydb.cursor(dictionary=True)
+
+    #create and execute a query to delete the reservation with the reservation id that was passed as a url parameter
+    delete_query = 'DELETE FROM reservations WHERE id = %s;'
+    cursor.execute(delete_query, (code,))
+    mydb.commit()
+    mydb.close()
+
+    #redirect to the homepage
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
