@@ -24,6 +24,19 @@ def get_db_connection():
     except sqlite3.Error as e:
         print(f"Database connection error: {e}")
         return None
+    
+def generate_eticket(first_name):
+    base = "INFOTC4320"
+    result = ""
+
+    # interleave characters
+    for i in range(max(len(first_name), len(base))):
+        if i < len(first_name):
+            result += first_name[i]
+        if i < len(base):
+            result += base[i]
+
+    return result
 
 def get_reservationID(code):
     #get a connection to the database
@@ -118,6 +131,7 @@ def create_reservation_post():
     mydb = get_db_connection()
     cursor = mydb.cursor()
     #get form data
+    eTicketNumber = generate_eticket(request.form.get('firstname'))
     passengerName = request.form.get('firstname')
     lastName = request.form.get('lastname')
     seatRow = request.form.get('row')
@@ -139,10 +153,10 @@ def create_reservation_post():
         flash(error_message)
         return redirect(url_for('create_reservation_get'))
     #create an insert query
-    insert_query = "INSERT INTO reservations (passengerName, seatRow, seatColumn) values  (?, ?, ?);"
+    insert_query = "INSERT INTO reservations (passengerName, seatRow, seatColumn, eTicketNumber) values  (?, ?, ?, ?);"
     #execute the query and check for errors
     try:
-        cursor.execute(insert_query, (passengerName, seatRow, seatColumn))
+        cursor.execute(insert_query, (passengerName, seatRow, seatColumn, eTicketNumber))
         mydb.commit()
 
         if cursor.rowcount == 0:
