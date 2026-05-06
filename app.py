@@ -118,14 +118,14 @@ def create_reservation_post():
     mydb = get_db_connection()
     cursor = mydb.cursor()
     #get form data
-    firstName = request.form.get('firstname')
+    passengerName = request.form.get('firstname')
     lastName = request.form.get('lastname')
     row = request.form.get('row')
     seat = request.form.get('seat')
     #validate all required fields are submitted
     error_message = ""
 
-    if not firstName:
+    if not passengerName:
         error_message += "\nFirstname required. "
     if not lastName:
         error_message += "\nLastname required. "
@@ -139,14 +139,14 @@ def create_reservation_post():
         flash(error_message)
         return redirect(url_for('create_reservation_get'))
     #create an insert query
-    insert_query = "INSERT INTO reservations (firstName, row, seat) values  (?, ?, ?, ?);"
+    insert_query = "INSERT INTO reservations (passengerName, row, seat) values  (?, ?, ?, ?);"
     #execute the query and check for errors
     try:
-        cursor.execute(insert_query, (firstName, row, seat))
+        cursor.execute(insert_query, (passengerName, row, seat))
         mydb.commit()
 
         if cursor.rowcount == 0:
-            flash(f"ERROR: Reservation for {firstName} was not created")
+            flash(f"ERROR: Reservation for {passengerName} was not created")
             return redirect(url_for('create_reservation_get'))
         else: 
             flash(f"SUCCESS: {cursor.rowcount} new reservation(s) created.\nSee results below")
