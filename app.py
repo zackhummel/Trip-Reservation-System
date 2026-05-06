@@ -120,8 +120,8 @@ def create_reservation_post():
     #get form data
     passengerName = request.form.get('firstname')
     lastName = request.form.get('lastname')
-    row = request.form.get('row')
-    seat = request.form.get('seat')
+    seatRow = request.form.get('row')
+    seatColumn = request.form.get('seat')
     #validate all required fields are submitted
     error_message = ""
 
@@ -129,9 +129,9 @@ def create_reservation_post():
         error_message += "\nFirstname required. "
     if not lastName:
         error_message += "\nLastname required. "
-    if not row:
+    if not seatRow:
         error_message += "\nRow required. "
-    if not seat:
+    if not seatColumn:
         error_message += "\nSeat is required. "
      
         
@@ -139,10 +139,10 @@ def create_reservation_post():
         flash(error_message)
         return redirect(url_for('create_reservation_get'))
     #create an insert query
-    insert_query = "INSERT INTO reservations (passengerName, row, seat) values  (?, ?, ?, ?);"
+    insert_query = "INSERT INTO reservations (passengerName, seatRow, seatColumn) values  (?, ?, ?, ?);"
     #execute the query and check for errors
     try:
-        cursor.execute(insert_query, (passengerName, row, seat))
+        cursor.execute(insert_query, (passengerName, seatRow, seatColumn))
         mydb.commit()
 
         if cursor.rowcount == 0:
