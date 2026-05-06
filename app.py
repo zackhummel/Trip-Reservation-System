@@ -1,7 +1,8 @@
-import pygal, tempfile, webbrowser, os, csv
+import pygal, tempfile, webbrowser, os, csv, sqlite3
 from lxml import etree
 from flask import Flask, render_template, request, redirect, url_for, Blueprint, flash
 from flask_sqlalchemy import SQLAlchemy
+
 
 
 #create a Flask object
@@ -13,6 +14,17 @@ app.config["DEBUG"] = True
 #flash the secret key to secure sessions
 app.config['SECRET_KEY'] = 'your secret key'
 
+def get_db_connection():
+    try:
+        #connect to the reservations.db database
+        conn = sqlite3.connect('reservations.db')
+        #set the row factory to sqlite3.Row to access columns by name
+        conn.row_factory = sqlite3.Row
+        return conn
+    except sqlite3.Error as e:
+        print(f"Database connection error: {e}")
+        return None
+   
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -36,6 +48,22 @@ def admin():
 @app.route("/reservations", methods=['GET', 'POST'])
 def reservations():
     return render_template('reservations.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # For demonstration, using hardcoded credentials. In production, use a secure database.
+        if username == 'admin' and password == 'password':
+            flash('Login successful!', 'success')
+            return redirect(url_for('reservations.html'))
+        else:
+            flash('Invalid credentials. Please try again.', 'error')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
 
 
 if __name__ == "__main__":
