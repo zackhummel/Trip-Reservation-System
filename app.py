@@ -51,11 +51,15 @@ def reservations():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    mydb = get_db_connection()
+    cursor = mydb.cursor(dictionary=True)
+    query = "SELECT * FROM admins;"
+    cursor.execute(query)
+    
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # For demonstration, using hardcoded credentials. In production, use a secure database.
         if username == 'admin' and password == 'password':
             flash('Login successful!', 'success')
             return redirect(url_for('reservations.html'))
