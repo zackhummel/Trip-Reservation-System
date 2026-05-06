@@ -52,7 +52,7 @@ def reservations():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     mydb = get_db_connection()
-    cursor = mydb.cursor(dictionary=True)
+    cursor = mydb.cursor()
     query = "SELECT * FROM admins;"
     cursor.execute(query)
     
