@@ -5,8 +5,8 @@
     
     {% for reservation in reservations %}
         <div class="post">
-            <p><strong>Reservation ID: </strong> {{ reservation['passengerName'], reservation['seatRow'], 
-                reservation['seatColumn'], reservation['eTicketNumber'] }}</p>
+            <p><strong>Reservation: </strong> {{ reservation['passengerName'] }}, <strong>Seat Row: </strong>{{ reservation['seatRow'] }}, 
+                <strong>Seat Column: </strong>{{ reservation['seatColumn'] }}, <strong>ETicket Number: </strong>{{ reservation['eTicketNumber'] }}</p>
             
             
         </div>
