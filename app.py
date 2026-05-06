@@ -51,23 +51,23 @@ def reservations():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    mydb = get_db_connection()
-    cursor = mydb.cursor()
-    query = "SELECT * FROM admins;"
-    cursor.execute(query)
-    
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+    
+    mydb = get_db_connection()
+    cursor = mydb.cursor()
+    query = "SELECT * FROM admins WHERE username = ? AND password = ?;"
+    cursor.execute(query, (username, password))
+    admin = cursor.fetchone()
 
-        if username == 'admin' and password == 'password':
-            flash('Login successful!', 'success')
-            return redirect(url_for('reservations.html'))
-        else:
-            flash('Invalid credentials. Please try again.', 'error')
-            return redirect(url_for('login'))
-
-    return render_template('admin.html')
+    mydb.close()
+    if admin: 
+        flash('Login successful!', 'success')
+        return redirect(url_for('reservations'))
+    else:
+        flash('Invalid credentials. Please try again.', 'error')
+        return render_template('admin.html')
 
 
 if __name__ == "__main__":
