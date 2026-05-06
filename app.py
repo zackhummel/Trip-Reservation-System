@@ -41,8 +41,8 @@ def index():
 
         if menu_choice == "admin":
             return redirect(url_for('admin'))
-        elif menu_choice == "reserve":
-            return redirect(url_for('reservations'))
+        elif menu_choice == "create":
+            return redirect(url_for('create_reservation_get'))
         else:
             flash('Please select an option.', 'error')
             return redirect(url_for('index'))
