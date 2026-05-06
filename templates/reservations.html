@@ -5,10 +5,9 @@
     
     {% for reservation in reservations %}
         <div class="post">
-            <p><strong>Reservation ID: </strong> {{ reservation['passengerName'] }}</p>
-            <p><strong>Customer Name: </strong> {{ reservation['seatRow'] }}</p>
-            <p><strong>Working Area: </strong> {{ reservation['seatColumn']}}</p>
-            <p><strong>Phone: </strong> {{ reservation['eTicketNumber']}}</p>
+            <p><strong>Reservation ID: </strong> {{ reservation['passengerName'], reservation['seatRow'], 
+                reservation['seatColumn'], reservation['eTicketNumber'] }}</p>
+            
             
         </div>
     {% endfor %}
