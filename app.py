@@ -90,8 +90,7 @@ def login():
 
 @app.route('/<code>/delete/', methods=('GET',))
 def delete_get(code):
-    #the dependent code is sent as a url parameter
-    #get the dependent code and send the dependent information to the delete.html template
+
     reservationID = get_reservationID(code)
     return render_template('delete.html', reservationID=reservationID)
 
