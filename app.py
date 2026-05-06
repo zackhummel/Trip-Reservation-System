@@ -98,7 +98,7 @@ def delete_get(code):
 def delete_post(code):
     #get a connection to the database and create a cursor
     mydb = get_db_connection()
-    cursor = mydb.cursor(dictionary=True)
+    cursor = mydb.cursor()
 
     #create and execute a query to delete the reservation with the reservation id that was passed as a url parameter
     delete_query = 'DELETE FROM reservations WHERE id = ?;'
