@@ -109,5 +109,52 @@ def delete_post(code):
     #redirect to the homepage
     return redirect(url_for('index'))
 
+@app.route('/create', methods=('GET'))
+def create_reservation_get():
+    return render_template('createReservation.html')
+@app.route('/create', methods=('POST',))
+def create_reservation_post():
+    #connect to the database and create a cursor 
+    mydb = get_db_connection()
+    cursor = mydb.cursor
+    #get form data
+    firstName = request.form.get('firstname')
+    lastName = request.form.get('lastname')
+    row = request.form.get('row')
+    seat = request.form.get('seat')
+    #validate all required fields are submitted
+    error_message = ""
+
+    if not firstName:
+        error_message += "\nFirstname required. "
+    if not lastName:
+        error_message += "\nLastname required. "
+    if not row:
+        error_message += "\nRow required. "
+    if not seat:
+        error_message += "\nSeat is required. "
+     
+        
+    if error_message: 
+        flash(error_message)
+        return redirect(url_for('create_reservation_get'))
+    #create an insert query
+    insert_query = "INSERT INTO reservations (FIRST_NAME, LAST_NAME, ROW, SEAT) values  (?, ?, ?, ?);"
+    #execute the query and check for errors
+    try:
+        cursor.execute(insert_query, (firstName, lastName, row, seat))
+        mydb.commit()
+
+        if cursor.rowcount == 0:
+            flash(f"ERROR: Reservation for {firstName} {lastName} was not created")
+            return redirect(url_for('create_reservation_get'))
+        else: 
+            flash(f"SUCCESS: {cursor.rowcount} new reservation(s) created.\nSee results below")
+
+    except Exception as error:
+        flash(f"Failed to create reservation for {firstName} {lastName}.\nError Message: {error.msg}")
+    #return to the index page
+    return redirect(url_for('index'))
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
