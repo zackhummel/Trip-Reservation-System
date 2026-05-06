@@ -28,7 +28,7 @@ def get_db_connection():
 def get_reservationID(code):
     #get a connection to the database
     mydb = get_db_connection()
-    cursor = mydb.cursor(dictionary=True)
+    cursor = mydb.cursor()
     query = 'SELECT * FROM reservations WHERE id = %s;'
     cursor.execute(query, (code,))
     reservationID = cursor.fetchone()
