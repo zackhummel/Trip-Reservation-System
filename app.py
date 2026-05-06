@@ -139,7 +139,7 @@ def create_reservation_post():
         flash(error_message)
         return redirect(url_for('create_reservation_get'))
     #create an insert query
-    insert_query = "INSERT INTO reservations (FIRST_NAME, ROW, SEAT) values  (?, ?, ?, ?);"
+    insert_query = "INSERT INTO reservations (firstName, row, seat) values  (?, ?, ?, ?);"
     #execute the query and check for errors
     try:
         cursor.execute(insert_query, (firstName, row, seat))
