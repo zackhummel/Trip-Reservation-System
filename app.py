@@ -55,19 +55,19 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
     
-    mydb = get_db_connection()
-    cursor = mydb.cursor()
-    query = "SELECT * FROM admins WHERE username = ? AND password = ?;"
-    cursor.execute(query, (username, password))
-    admin = cursor.fetchone()
+        mydb = get_db_connection()
+        cursor = mydb.cursor()
+        query = "SELECT * FROM admins WHERE username = ? AND password = ?;"
+        cursor.execute(query, (username, password))
+        admin = cursor.fetchone()
 
-    mydb.close()
-    if admin: 
-        flash('Login successful!', 'success')
-        return redirect(url_for('reservations'))
-    else:
-        flash('Invalid credentials. Please try again.', 'error')
-        return render_template('admin.html')
+        mydb.close()
+        if admin: 
+            flash('Login successful!', 'success')
+            return redirect(url_for('reservations'))
+        else:
+            flash('Invalid credentials. Please try again.', 'error')
+            return render_template('admin.html')
 
 
 if __name__ == "__main__":
