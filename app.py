@@ -63,7 +63,7 @@ def login():
             flash('Invalid credentials. Please try again.', 'error')
             return redirect(url_for('login'))
 
-    return render_template('login.html')
+    return render_template('admin.html')
 
 
 if __name__ == "__main__":
