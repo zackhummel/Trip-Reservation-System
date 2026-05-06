@@ -109,7 +109,7 @@ def delete_post(code):
     #redirect to the homepage
     return redirect(url_for('index'))
 
-@app.route('/create', methods=('GET'))
+@app.route('/create', methods=('GET',))
 def create_reservation_get():
     return render_template('createReservation.html')
 @app.route('/create', methods=('POST',))
