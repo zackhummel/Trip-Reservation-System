@@ -116,7 +116,7 @@ def create_reservation_get():
 def create_reservation_post():
     #connect to the database and create a cursor 
     mydb = get_db_connection()
-    cursor = mydb.cursor
+    cursor = mydb.cursor()
     #get form data
     firstName = request.form.get('firstname')
     lastName = request.form.get('lastname')
