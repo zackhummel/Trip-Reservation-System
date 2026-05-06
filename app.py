@@ -29,7 +29,7 @@ def get_reservationID(code):
     #get a connection to the database
     mydb = get_db_connection()
     cursor = mydb.cursor()
-    query = 'SELECT * FROM reservations WHERE id = %s;'
+    query = 'SELECT * FROM reservations WHERE id = ?;'
     cursor.execute(query, (code,))
     reservationID = cursor.fetchone()
     return reservationID
@@ -102,7 +102,7 @@ def delete_post(code):
     cursor = mydb.cursor(dictionary=True)
 
     #create and execute a query to delete the reservation with the reservation id that was passed as a url parameter
-    delete_query = 'DELETE FROM reservations WHERE id = %s;'
+    delete_query = 'DELETE FROM reservations WHERE id = ?;'
     cursor.execute(delete_query, (code,))
     mydb.commit()
     mydb.close()
