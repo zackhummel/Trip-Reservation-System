@@ -171,7 +171,7 @@ def delete_get(code):
 
     reservationID = get_reservationID(code)
     return render_template('delete.html', reservationID=reservationID)
-
+    
 @app.route('/<code>/delete/', methods=('POST',))
 def delete_post(code):
     #get a connection to the database and create a cursor
@@ -185,7 +185,7 @@ def delete_post(code):
     mydb.close()
 
     #redirect to the homepage
-    return redirect(url_for('index'))
+    return redirect(url_for('viewReservations'))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
