@@ -34,7 +34,7 @@ with app.app_context():
 def get_db_connection():
     try:
         #connect to the reservations.db database
-        conn = sqlite3.connect('reservations.db')
+        conn = sqlite3.connect('/app/database/reservations.db')
         #set the row factory to sqlite3.Row to access columns by name
         conn.row_factory = sqlite3.Row
         return conn
