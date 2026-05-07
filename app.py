@@ -132,6 +132,18 @@ def reservations():
 
     return render_template('reservations.html', takenSeats = seatsOnly)
 
+@app.route("/viewReservations", methods=['GET', 'POST'])
+def viewReservations():
+    mydb = get_db_connection()
+    cursor = mydb.cursor()
+    query = "SELECT * FROM reservations;"
+    cursor.execute(query)
+    reservations = cursor.fetchall()
+
+    
+    return render_template('viewReservations.html', reservations=reservations)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
