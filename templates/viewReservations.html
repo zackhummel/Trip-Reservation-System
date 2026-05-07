@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{% block title %}All Reservations {% endblock %}</h1>
+    
+    {% for reservation in reservations %}
+        <div class="post">
+            <p><strong>Reservation: </strong> {{ reservation['passengerName'] }}, 
+                <strong>Seat Row: </strong>{{ reservation['seatRow'] }}, 
+                <strong>Seat Column: </strong>{{ reservation['seatColumn'] }}, 
+                <strong>ETicket Number: </strong>{{ reservation['eTicketNumber'] }}</p>
+                <a href="{{ url_for('delete_get', code=reservation['id']) }}">Delete Reservation</a>
+            
+        </div>
+    {% endfor %}
+
+{% endblock %}
