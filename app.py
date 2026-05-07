@@ -159,7 +159,7 @@ def login():
         mydb.close()
         if admin: 
             flash('Login successful!', 'success')
-            return redirect(url_for('viewReservations.html'))
+            return redirect(url_for('viewReservations'))
         else:
             flash('Invalid credentials. Please try again.', 'error')
             return render_template('admin.html')
