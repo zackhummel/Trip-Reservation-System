@@ -12,4 +12,5 @@ services:
       - .:/app
     environment:
       FLASK_DEBUG: "1"
+    command: sh -c "mkdir -p /app/database && python app.py"
       
