@@ -31,6 +31,24 @@ with app.app_context():
     db.create_all()
 
 
+def get_cost_matrix():
+    cost_matrix = [[100, 75, 50, 100] for row in range(12)]
+    return cost_matrix
+
+def calculate_total_cost():
+    reservations = Reservation.query.all()
+    cost_matrix = get_cost_matrix()
+
+    total = 0
+
+    for reservation in reservations:
+        row = reservation.seatRow
+        col = reservation.seatColumn
+
+        total += cost_matrix[row][col]
+
+    return total
+
 def get_db_connection():
     try:
         #connect to the reservations.db database
@@ -139,9 +157,10 @@ def viewReservations():
     query = "SELECT * FROM reservations;"
     cursor.execute(query)
     reservations = cursor.fetchall()
+    total_cost = calculate_total_cost()
 
     
-    return render_template('viewReservations.html', reservations=reservations)
+    return render_template('viewReservations.html', reservations=reservations, total_cost=total_cost)
 
 
 @app.route('/login', methods=['GET', 'POST'])
